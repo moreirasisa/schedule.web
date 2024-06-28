@@ -5,17 +5,9 @@ import { MONTHS } from './const';
 import { areDatesTheSame, getDateObj, getDaysInMonth, getSortedDays, range } from './utils';
 import { useEffect, useState } from 'react';
 
-const getAppointments = async (setAppointments) => {
-    const response = await fetch("http://localhost:5000/api/v1/appointment");
-    const data = await response.json()
-    setAppointments(data);
-    console.log("Appointments:", data)
-}
-
 export const Calendar = ({ startingDate, appointmentsObj }) => {
     const [currentMonth, setCurrentMonth] = useState(startingDate.getMonth());
     const [currentYear, setCurrentYear] = useState(startingDate.getFullYear());
-    const [appointments, setAppointments] = useState([]);
     const DAYSINAMONTH = getDaysInMonth(currentMonth, currentYear);
     const nextMonth = () => {
         if (currentMonth < 11) {
@@ -34,10 +26,6 @@ export const Calendar = ({ startingDate, appointmentsObj }) => {
             setCurrentYear((prev) => prev - 1);
         }
     }
-
-    useEffect(() => {
-        getAppointments(setAppointments);
-    }, []);
 
     return (
         <Wrapper>
@@ -61,8 +49,8 @@ export const Calendar = ({ startingDate, appointmentsObj }) => {
                         <p>{day}</p>
                         {
                             appointmentsObj.map((appointment) => (
-                                areDatesTheSame(getDateObj(day, currentMonth, currentYear), appointment.date) &&
-                                <StyledAppointment>{appointment.title}</StyledAppointment>
+                                areDatesTheSame(getDateObj(day, currentMonth, currentYear), new Date(appointment.date)) &&
+                                <StyledAppointment>{appointment.name}</StyledAppointment>
                             ))
                         }
                     </StyledDay>
