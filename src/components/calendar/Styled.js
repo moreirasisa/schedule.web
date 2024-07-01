@@ -46,8 +46,18 @@ export const StyledDay = styled.span`
 
 export const StyledAppointment = styled.span`
     display: grid;
-    text-align: left;
+    text-align: center;
     background: darkblue;
+    color: white;
+    padding: 2px 5px;
+    margin: 5px;
+    border-radius: 8px;
+`;
+
+export const StyledHoliday = styled.span`
+    display: grid;
+    text-align: center;
+    background: #E1493D;
     color: white;
     padding: 2px 5px;
     margin: 5px;

@@ -5,9 +5,8 @@ import { useEffect, useState } from 'react';
 
 const getAppointments = async (setAppointments) => {
   const response = await fetch("http://localhost:5000/api/v1/appointment");
-  const data = await response.json()
+  const data = await response.json();
   setAppointments(data);
-  console.log("Appointments:", data)
 }
 
 function App() {
