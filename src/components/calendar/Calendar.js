@@ -4,20 +4,12 @@ import ArrowCircleRightTwoToneIcon from '@mui/icons-material/ArrowCircleRightTwo
 import { MONTHS } from './const';
 import { areDatesTheSame, getDateObj, getDaysInMonth, getSortedDays, range } from './utils';
 import React, { useEffect, useState } from 'react';
-import IconButton from '@mui/material/IconButton';
-import AddTaskIcon from '@mui/icons-material/AddTask';
 import Modal from '../modal/Modal';
 
 const getHolidays = async (setHolidays) => {
     const response = await fetch("http://localhost:5000/api/v1/holidays");
     const data = await response.json();
     setHolidays(data);
-}
-
-const getAppointmentTypes = async (setAppointmentTypes) => {
-    const response = await fetch("http://localhost:5000/api/v1/appointment/types");
-    const data = await response.json();
-    setAppointmentTypes(data);
 }
 
 const createAppointment = async (appointmentData, setAppointments) => {
@@ -44,7 +36,6 @@ export const Calendar = ({ startingDate, appointmentsObj }) => {
     const [currentYear, setCurrentYear] = useState(startingDate.getFullYear());
     const [holidays, setHolidays] = useState([]);
     const [appointments, setAppointments] = useState([]);
-    const [appointmentTypes, setAppointmentTypes] = useState([]);
     const DAYSINAMONTH = getDaysInMonth(currentMonth, currentYear);
 
     const nextMonth = () => {
@@ -67,7 +58,6 @@ export const Calendar = ({ startingDate, appointmentsObj }) => {
 
     useEffect(() => {
         getHolidays(setHolidays);
-        getAppointmentTypes(setAppointmentTypes);
     }, []);
 
     return (
@@ -94,9 +84,7 @@ export const Calendar = ({ startingDate, appointmentsObj }) => {
                                 {day}
                             </div>
                             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                <IconButton color="primary" aria-label="Add appointment">
-                                    <AddTaskIcon />
-                                </IconButton>
+                                <Modal/>
                             </div>
                         </p>
                         {
