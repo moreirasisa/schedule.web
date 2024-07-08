@@ -13,6 +13,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import axios from 'axios';
 import Select from '@mui/material/Select';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState, useEffect } from 'react';
 
 export default function Modal() {
@@ -20,7 +23,7 @@ export default function Modal() {
     const [appointmentTypes, setAppointmentTypes] = useState([]);
     const [appointment, setAppointment] = useState({
         name: '',
-        date: '',
+        date: null,
         startTime: '',
         endTime: '',
         typeId: '',
@@ -49,6 +52,13 @@ export default function Modal() {
           [name]: value
         }));
     };
+
+    const handleDateChange = (date) => {
+      setAppointment(prevState => ({
+        ...prevState,
+        date: date
+      }))
+    }
 
     const handleSubmit = async () => {
         try {
@@ -82,8 +92,9 @@ export default function Modal() {
                     onChange={handleChange} />
                 </Box>
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
-                  <TextField label="Date" variant="outlined" fullWidth name="date" value={appointment.date}
-                    onChange={handleChange} />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker label="Date" name="date" fullWidth value={appointment.date} onChange={handleDateChange} />
+                  </LocalizationProvider>
                 </Box>
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
                   <TextField label="Start Time" variant="outlined" fullWidth name="startTime" value={appointment.startTime}

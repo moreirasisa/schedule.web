@@ -90,7 +90,7 @@ export const Calendar = ({ startingDate, appointmentsObj }) => {
                         {
                             appointmentsObj.map((appointment) => (
                                 areDatesTheSame(getDateObj(day, currentMonth, currentYear), new Date(appointment.date)) &&
-                                <StyledAppointment>{appointment.name} | {String(appointment.startTime).slice(11,16)} - {String(appointment.endTime).slice(11,16)}</StyledAppointment>
+                                <StyledAppointment>{appointment.name} | {appointment.startTime} - {appointment.endTime}</StyledAppointment>
                             ))
                         }
                         {
